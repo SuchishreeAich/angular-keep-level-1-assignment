@@ -40,6 +40,12 @@ export class AppComponent implements OnInit {
    // tslint:disable-next-line:one-line
    addNote(){
     // console.log(this.note.title + '    ' + this.note.text);
+    if (this.note.title === '' || this.note.text === '')
+    // tslint:disable-next-line:one-line
+    {
+      this.errMessage = 'Title and Text both are required fields';
+      return;
+    }
     this.notesservice.addNote(this.note).subscribe(
       data => {}
       ,
