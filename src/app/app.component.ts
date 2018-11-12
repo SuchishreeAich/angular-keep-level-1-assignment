@@ -24,10 +24,16 @@ export class AppComponent implements OnInit {
     this.notesservice.getNotes().subscribe(
       data => this.noteArray = data
       ,
-      (err: Response) => {
-        // console.log(err);
-        this.errMessage = JSON.stringify(err) ;
+      (err) => {
+         console.log('GET');
+         console.log(err);
+        if (err.status === 404)
+        // tslint:disable-next-line:one-line
+        {
+          this.errMessage = err.message;
+        }
       }
+      // err => console.log(err)
     );
   }
 
@@ -37,9 +43,14 @@ export class AppComponent implements OnInit {
     this.notesservice.addNote(this.note).subscribe(
       data => {}
       ,
-      (err: Response) => {
-        console.log(err);
+      (err) => {
+        if (err.status === 404)
+        // tslint:disable-next-line:one-line
+        {
+          this.errMessage = err.message;
+        }
       }
+      // err => console.log(err)
      );
     this.noteArray.push(this.note);
     this.note = new Note();
